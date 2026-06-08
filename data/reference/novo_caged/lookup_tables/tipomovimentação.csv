@@ -1,0 +1,19 @@
+Código,Descrição
+10,Admissão por primeiro emprego
+20,Admissão por reemprego
+25,Admissão por contrato trabalho prazo determinado
+31,Desligamento por demissão sem justa causa
+32,Desligamento por demissão com justa causa
+33,Culpa Recíproca
+35,Admissão por reintegração
+40,Desligamento a pedido
+43,Término contrato trabalho prazo determinado
+45,Desligamento por Término de contrato
+50,Desligamento por aposentadoria
+60,Desligamento por morte
+70,Admissão por transferência
+80,Desligamento por transferência
+90,Desligamento por Acordo entre empregado e empregador
+97,Admissão de Tipo Ignorado
+98,Desligamento de Tipo Ignorado
+99,Não Identificado
