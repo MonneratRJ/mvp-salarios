@@ -70,11 +70,12 @@ Excluded from IT occupation list:
 - `317115` - Programador de Maquinas (CNC), not software engineering role.
 - `317120` - Programador de Multimidia, can be reassessed later.
 
-## 5) Region restriction (optional)
+## 5) Region scope
 
-Apply only if the filtered dataset is still too large:
+Active decision for the MVP baseline:
 
-- Sul and Sudeste regions.
+- Keep all Brazilian regions (national scope).
+- Do not apply Sul/Sudeste restriction in the main extraction pipeline.
 
 ## 6) Filter order
 
@@ -85,4 +86,4 @@ Recommended order for reproducible cleaning:
 3. Keep `seção == 'J'`.
 4. Keep `subclasse` in the selected TI subclass list.
 5. Keep `cbo2002ocupação` in the selected IT occupation list.
-6. Optionally apply region filter (Sul/Sudeste).
+6. Keep national records (no regional filter).

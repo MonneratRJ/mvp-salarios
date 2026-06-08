@@ -13,12 +13,40 @@ For the first cleaning pass, we are narrowing the project to salaries in the Tec
 The current filtering plan is:
 
 1. Use `seção`, `categoria`, and `cbo2002ocupação` to keep only the target technology-information scope.
-2. Consider restricting further to the South and Southeast regions only if the dataset is still too large.
+2. Keep national coverage (all Brazilian regions) for the main dataset.
 3. Exclude `indtrabintermitente` in the first pass because it can introduce volatility that does not help the calculator objective.
 
 These decisions are documented in [docs/scope_decisions.md](docs/scope_decisions.md) and should be updated whenever the scope changes.
 
 The concrete code lists for filtering are in [docs/ti_filter_codes.md](docs/ti_filter_codes.md).
+
+## Filtering benchmark (test run)
+
+We ran a full test processing on:
+
+- `data/raw/novo_caged/2026/202604/CAGEDMOV202604.txt`
+
+Filtered output generated at:
+
+- `data/processed/novo_caged/2026/202604/CAGEDMOV202604_ti_filtered.csv`
+
+### Results
+
+| Metric                                                                         |     Value |
+| ------------------------------------------------------------------------------ | --------: |
+| Raw rows (`CAGEDMOV202604.txt`)                                                | 4,451,422 |
+| Rows with valid salary                                                         | 4,406,858 |
+| Rows after TI filter (`seção` + `categoria` + `subclasse` + `cbo2002ocupação`) |    18,547 |
+| Reduction vs raw rows                                                          |  99.5833% |
+| Retained vs raw rows                                                           |   0.4167% |
+| Rows after optional Sul+Sudeste restriction                                    |    15,497 |
+| Additional reduction from region restriction                                   |    16.44% |
+
+### Decision for next step
+
+Based on this test, the current TI filtering strategy already reduces the dataset aggressively and appears sufficient to proceed with more months/years.
+
+We will proceed with national scope (no Sul/Sudeste restriction) for the next downloads.
 
 ## Keep as core predictors
 
