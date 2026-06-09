@@ -26,4 +26,6 @@ These fields are not a good fit for the current calculator scope because they ca
 
 - Filtering by `seção`, `categoria`, and `cbo2002ocupação` should happen before modeling.
 - Regional filtering is not active in the current baseline (national scope).
+- Salary quality rule: keep only `unidadesaláriocódigo = 5` (Mês).
+- Salary consistency rule: drop rows where `salário != valorsaláriofixo` and rows with `salário` filled but `valorsaláriofixo` empty.
 - Any future scope change should be logged here before it is applied in the notebook.

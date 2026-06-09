@@ -87,3 +87,13 @@ Recommended order for reproducible cleaning:
 4. Keep `subclasse` in the selected TI subclass list.
 5. Keep `cbo2002ocupação` in the selected IT occupation list.
 6. Keep national records (no regional filter).
+7. Keep only `unidadesaláriocódigo == 5` (Mês).
+8. Keep only rows where `salário` and `valorsaláriofixo` are both filled and equal.
+
+## 7) Salary target consistency rule
+
+To improve comparability of monthly salary values in the MVP dataset:
+
+- Use `salário` as the model target (`y`).
+- Ignore rows where `salário != valorsaláriofixo`.
+- Ignore rows where `salário` is filled and `valorsaláriofixo` is empty.

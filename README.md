@@ -15,6 +15,8 @@ The current filtering plan is:
 1. Use `seção`, `categoria`, and `cbo2002ocupação` to keep only the target technology-information scope.
 2. Keep national coverage (all Brazilian regions) for the main dataset.
 3. Exclude `indtrabintermitente` in the first pass because it can introduce volatility that does not help the calculator objective.
+4. Keep only records with `unidadesaláriocódigo == 5` (monthly payment unit).
+5. Keep only records where `salário` and `valorsaláriofixo` are both filled and equal.
 
 These decisions are documented in [docs/scope_decisions.md](docs/scope_decisions.md) and should be updated whenever the scope changes.
 
@@ -32,21 +34,29 @@ Filtered output generated at:
 
 ### Results
 
-| Metric                                                                         |     Value |
-| ------------------------------------------------------------------------------ | --------: |
-| Raw rows (`CAGEDMOV202604.txt`)                                                | 4,451,422 |
-| Rows with valid salary                                                         | 4,406,858 |
-| Rows after TI filter (`seção` + `categoria` + `subclasse` + `cbo2002ocupação`) |    18,547 |
-| Reduction vs raw rows                                                          |  99.5833% |
-| Retained vs raw rows                                                           |   0.4167% |
-| Rows after optional Sul+Sudeste restriction                                    |    15,497 |
-| Additional reduction from region restriction                                   |    16.44% |
+| Metric                                                                                |     Value |
+| ------------------------------------------------------------------------------------- | --------: |
+| Raw rows (`CAGEDMOV202604.txt`)                                                       | 4,451,422 |
+| Rows after salary-quality rule (`salário` valid, monthly unit, fixed salary matching) | 4,092,938 |
+| Rows after TI filter (`seção` + `categoria` + `subclasse` + `cbo2002ocupação`)        |    18,517 |
+| Reduction vs raw rows                                                                 |  99.5840% |
+| Retained vs raw rows                                                                  |   0.4160% |
 
 ### Decision for next step
 
-Based on this test, the current TI filtering strategy already reduces the dataset aggressively and appears sufficient to proceed with more months/years.
+Based on this test, the current TI filtering strategy already reduces the dataset aggressively and appears sufficient to proceed with more months/years, even after the stricter salary-quality rule.
 
 We will proceed with national scope (no Sul/Sudeste restriction) for the next downloads.
+
+## Current processed dataset totals
+
+After reprocessing all available months from `2020-01` through `2026-04` with the salary-quality rule, the current filtered base contains:
+
+| Metric                  |     Value |
+| ----------------------- | --------: |
+| Processed monthly files |        76 |
+| Total filtered rows     | 1,350,074 |
+| Processed CSV size      |   0.14 GB |
 
 ## Keep as core predictors
 
@@ -100,7 +110,14 @@ These columns should stay out of the feature matrix because they are administrat
 
 The model target will be the salary amount itself. One salary-related column will be used only as the label `y`, and it must never appear in the predictors `X`.
 
-For implementation, we will confirm the exact salary field semantics in the source documentation and then keep only one salary column as the target.
+For implementation, the target policy is:
+
+1. Use `salário` as `y`.
+2. Accept only records with `unidadesaláriocódigo == 5` (Mês).
+3. Discard records where `salário != valorsaláriofixo`.
+4. Discard records where `salário` is filled but `valorsaláriofixo` is empty.
+
+This keeps a cleaner and more comparable monthly salary dataset.
 
 ## Supporting files
 

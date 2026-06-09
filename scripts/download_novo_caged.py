@@ -204,12 +204,25 @@ def process_txt_to_filtered_csv(
     ):
         stats["rows_total"] += len(chunk)
 
-        for col in ["categoria", "se\u00e7\u00e3o", "subclasse", "cbo2002ocupa\u00e7\u00e3o"]:
+        for col in [
+            "categoria",
+            "se\u00e7\u00e3o",
+            "subclasse",
+            "cbo2002ocupa\u00e7\u00e3o",
+            "unidadesal\u00e1rioc\u00f3digo",
+            "valorsal\u00e1riofixo",
+        ]:
             chunk[col] = chunk[col].fillna("").astype(str).str.strip()
 
         salary = chunk["sal\u00e1rio"].fillna("").astype(str).str.strip()
+        fixed_salary = chunk["valorsal\u00e1riofixo"].fillna("").astype(str).str.strip()
+        salary_unit = chunk["unidadesal\u00e1rioc\u00f3digo"].fillna("").astype(str).str.strip()
+
         valid_salary = salary.ne("") & salary.ne("0") & salary.ne("0,00")
-        base = chunk[valid_salary].copy()
+        salary_consistent = fixed_salary.ne("") & (salary == fixed_salary)
+        monthly_salary_unit = salary_unit == "5"
+
+        base = chunk[valid_salary & salary_consistent & monthly_salary_unit].copy()
         stats["rows_salary_valid"] += len(base)
 
         filtered = base[
