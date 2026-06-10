@@ -42,6 +42,9 @@ data/raw/
 tmp/
 temp/
 
+# Copilot local files
+.copilot/
+
 # Optional folders for generated artifacts
 artifacts/
 models/
