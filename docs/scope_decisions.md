@@ -1,31 +1,32 @@
-# Scope Decisions for the Salary Calculator MVP
+# Decisões de Escopo do MVP de Salários
 
-This document tracks the cleaning and filtering decisions agreed during the project.
+Este documento acompanha as decisões de limpeza e filtragem acordadas durante o projeto.
 
-## Current scope
+## Escopo atual
 
-- The MVP is focused on salaries from the Technology Information area only.
-- The first cleaning pass should keep the dataset smaller and more aligned with the calculator goal.
-- Current agreed direction: keep national coverage for the baseline dataset.
+- O MVP está focado apenas em salários da área de Tecnologia da Informação.
+- A primeira passagem de limpeza deve manter o conjunto menor e mais alinhado com o objetivo da calculadora.
+- A direção atual acordada é manter cobertura nacional para o conjunto base.
 
-## Columns used for filtering the dataset
+## Colunas usadas para filtrar o conjunto de dados
 
-These columns will be used to isolate the scope of interest before feature engineering.
+Estas colunas serão usadas para isolar o escopo de interesse antes da engenharia de atributos.
 
 - `seção`
 - `categoria`
 - `cbo2002ocupação`
 
-## Columns to exclude in the first cleaning pass
+## Colunas excluídas na primeira limpeza
 
-These fields are not a good fit for the current calculator scope because they can add noise, instability, or do not reflect the person-level input we want for the MVP.
+Esses campos não são adequados para o escopo atual da calculadora porque podem adicionar ruído, instabilidade ou não representam o tipo de entrada por pessoa que queremos no MVP.
 
 - `indtrabintermitente`
 
-## Notes
+## Observações
 
-- Filtering by `seção`, `categoria`, and `cbo2002ocupação` should happen before modeling.
-- Regional filtering is not active in the current baseline (national scope).
-- Salary quality rule: keep only `unidadesaláriocódigo = 5` (Mês).
-- Salary consistency rule: drop rows where `salário != valorsaláriofixo` and rows with `salário` filled but `valorsaláriofixo` empty.
-- Any future scope change should be logged here before it is applied in the notebook.
+- A filtragem por `seção`, `categoria` e `cbo2002ocupação` deve acontecer antes da modelagem.
+- A filtragem regional não está ativa no baseline atual (escopo nacional).
+- Regra de qualidade salarial: manter apenas `unidadesaláriocódigo = 5` (Mês).
+- Regra de consistência salarial: remover linhas em que `salário != valorsaláriofixo` e linhas com `salário` preenchido, mas `valorsaláriofixo` vazio.
+- Regra de variáveis temporais: manter `ano` e `mes` como contexto temporal numérico e excluir `competencia_mov` e `ano_mes` do caminho de modelagem por serem duplicatas em string.
+- Qualquer mudança futura de escopo deve ser registrada aqui antes de ser aplicada no notebook.

@@ -1,27 +1,27 @@
-# TI Filter Codes for MVP
+# Códigos de Filtro de TI para o MVP
 
-This file defines the concrete code filters to build the first modeling dataset for the salary calculator.
+Este arquivo define os filtros concretos de códigos para montar o primeiro conjunto de modelagem da calculadora de salários.
 
-## 1) seção (CNAE section)
+## 1) seção (seção CNAE)
 
-Use only section:
+Usar apenas a seção:
 
 - `J` - Informação e Comunicação
 
-## 2) categoria (employment category)
+## 2) categoria (categoria de vínculo)
 
-To reduce heterogeneity in the first MVP dataset, keep only:
+Para reduzir a heterogeneidade no primeiro conjunto do MVP, manter apenas:
 
-- `101` - Empregado geral CLT (including public employee under CLT)
+- `101` - Empregado geral CLT (incluindo empregado público sob CLT)
 
-Notes:
+Observações:
 
-- `103` (aprendiz) is excluded in this first pass because apprenticeship contracts have a different salary structure.
-- `111` (intermitente) remains excluded as previously agreed.
+- `103` (aprendiz) é excluído nesta primeira passagem porque contratos de aprendizagem têm estrutura salarial diferente.
+- `111` (intermitente) continua excluído conforme já acordado.
 
-## 3) subclasse (CNAE subclass)
+## 3) subclasse (subclasse CNAE)
 
-Use the core software and IT service subclasses:
+Usar as subclasses centrais de software e serviços de TI:
 
 - `6201500` - Desenvolvimento de programas de computador sob encomenda
 - `6201501` - Desenvolvimento de Programas de Computador Sob Encomenda
@@ -32,68 +32,68 @@ Use the core software and IT service subclasses:
 - `6209100` - Suporte Técnico, Manutenção e Outros Serviços em Tecnologia da Informação
 - `6311900` - Tratamento de Dados, Provedores de Serviços de Aplicação e Serviços de Hospedagem na Internet
 
-Optional expansion after baseline:
+Expansão opcional após o baseline:
 
 - `6319400` - Portais, Provedores de Conteúdo e Outros Serviços de Informação na Internet
-- Telecom-related subclasses (`611*`, `612*`, `613*`, `619*`) if we decide to expand from software/IT services to broader ICT.
+- Subclasses ligadas a telecom (`611*`, `612*`, `613*`, `619*`) se decidirmos expandir de software/serviços de TI para TIC mais ampla.
 
-## 4) cbo2002ocupação (IT occupations)
+## 4) cbo2002ocupação (ocupações de TI)
 
-Use the following occupation codes:
+Usar os seguintes códigos de ocupação:
 
 - `142510` - Gerente de Desenvolvimento de Sistemas
-- `142515` - Gerente de Producao de Tecnologia da Informacao
-- `142520` - Gerente de Projetos de Tecnologia da Informacao
-- `142525` - Gerente de Seguranca de Tecnologia da Informacao
-- `142530` - Gerente de Suporte Tecnico de Tecnologia da Informacao
+- `142515` - Gerente de Produção de Tecnologia da Informação
+- `142520` - Gerente de Projetos de Tecnologia da Informação
+- `142525` - Gerente de Segurança de Tecnologia da Informação
+- `142530` - Gerente de Suporte Técnico de Tecnologia da Informação
 - `142535` - Tecnólogo em Gestão da Tecnologia da Informação
-- `212205` - Engenheiro de Aplicativos em Computacao
-- `212210` - Engenheiro de Equipamentos em Computacao
-- `212215` - Engenheiros de Sistemas Operacionais em Computacao
+- `212205` - Engenheiro de Aplicativos em Computação
+- `212210` - Engenheiro de Equipamentos em Computação
+- `212215` - Engenheiro de Sistemas Operacionais em Computação
 - `212305` - Administrador de Banco de Dados
 - `212310` - Administrador de Redes
 - `212315` - Administrador de Sistemas Operacionais
 - `212320` - Administrador em Segurança da Informação
 - `212405` - Analista de Desenvolvimento de Sistemas
-- `212410` - Analista de Redes e de Comunicacao de Dados
-- `212415` - Analista de Sistemas de Automacao
+- `212410` - Analista de Redes e de Comunicação de Dados
+- `212415` - Analista de Sistemas de Automação
 - `212420` - Analista de Suporte Computacional
 - `212425` - Arquiteto de Soluções de Tecnologia da Informação
 - `212430` - Analista de Testes de Tecnologia da Informação
 - `317105` - Programador de Internet
-- `317110` - Programador de Sistemas de Informacao
+- `317110` - Programador de Sistemas de Informação
 - `317205` - Operador de Computador (Inclusive Microcomputador)
-- `317210` - Tecnico de Apoio ao Usuario de Informatica (Helpdesk)
+- `317210` - Técnico de Apoio ao Usuário de Informática (Helpdesk)
 
-Excluded from IT occupation list:
+Excluídas da lista de TI:
 
-- `317115` - Programador de Maquinas (CNC), not software engineering role.
-- `317120` - Programador de Multimidia, can be reassessed later.
+- `317115` - Programador de Máquinas (CNC), não é função de engenharia de software.
+- `317120` - Programador de Multimídia, pode ser reavaliado depois.
 
-## 5) Region scope
+## 5) Escopo regional
 
-Active decision for the MVP baseline:
+Decisão ativa para o baseline do MVP:
 
-- Keep all Brazilian regions (national scope).
-- Do not apply Sul/Sudeste restriction in the main extraction pipeline.
+- Manter todas as regiões brasileiras (escopo nacional).
+- Não aplicar restrição Sul/Sudeste na extração principal.
 
-## 6) Filter order
+## 6) Ordem dos filtros
 
-Recommended order for reproducible cleaning:
+Ordem recomendada para uma limpeza reprodutível:
 
-1. Remove records with missing/invalid salary target.
-2. Keep `categoria == 101`.
-3. Keep `seção == 'J'`.
-4. Keep `subclasse` in the selected TI subclass list.
-5. Keep `cbo2002ocupação` in the selected IT occupation list.
-6. Keep national records (no regional filter).
-7. Keep only `unidadesaláriocódigo == 5` (Mês).
-8. Keep only rows where `salário` and `valorsaláriofixo` are both filled and equal.
+1. Remover registros com target salarial ausente ou inválido.
+2. Manter `categoria == 101`.
+3. Manter `seção == 'J'`.
+4. Manter `subclasse` na lista de subclasses de TI selecionadas.
+5. Manter `cbo2002ocupação` na lista de ocupações de TI selecionadas.
+6. Manter registros nacionais (sem filtro regional).
+7. Manter apenas `unidadesaláriocódigo == 5` (Mês).
+8. Manter apenas linhas em que `salário` e `valorsaláriofixo` estejam preenchidos e iguais.
 
-## 7) Salary target consistency rule
+## 7) Regra de consistência do target salarial
 
-To improve comparability of monthly salary values in the MVP dataset:
+Para melhorar a comparabilidade dos valores salariais mensais no conjunto do MVP:
 
-- Use `salário` as the model target (`y`).
-- Ignore rows where `salário != valorsaláriofixo`.
-- Ignore rows where `salário` is filled and `valorsaláriofixo` is empty.
+- Usar `salário` como target do modelo (`y`).
+- Ignorar linhas em que `salário != valorsaláriofixo`.
+- Ignorar linhas em que `salário` esteja preenchido e `valorsaláriofixo` esteja vazio.
