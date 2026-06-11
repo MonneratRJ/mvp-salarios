@@ -8,7 +8,7 @@ from typing import Iterable
 import pandas as pd
 
 DEFAULT_INPUT_DIR = Path("data/processed/novo_caged")
-DEFAULT_OUTPUT_FILE = Path("data/processed/modeling/ti_salary_modeling_base.csv")
+DEFAULT_OUTPUT_FILE = Path("data/processed/modeling/ti_salary_modeling_base.csv.gz")
 
 COLUMN_MAP = {
     "competênciamov": "competencia_mov",
@@ -118,7 +118,13 @@ def build_modeling_base(input_dir: Path, output_file: Path) -> dict:
         logger.info("Consolidating %s", csv_path)
         monthly_df = pd.read_csv(csv_path, dtype=str)
         modeling_df = prepare_chunk(monthly_df)
-        modeling_df.to_csv(output_file, mode="w" if first_write else "a", index=False, header=first_write)
+        modeling_df.to_csv(
+            output_file,
+            mode="w" if first_write else "a",
+            index=False,
+            header=first_write,
+            compression="infer",
+        )
         rows_written += len(modeling_df)
         first_write = False
 
@@ -126,6 +132,7 @@ def build_modeling_base(input_dir: Path, output_file: Path) -> dict:
         "files": len(monthly_files),
         "rows": rows_written,
         "output_file": output_file,
+        "output_size_mb": round(output_file.stat().st_size / (1024 * 1024), 2),
         "columns": list(prepare_chunk(pd.read_csv(monthly_files[0], dtype=str, nrows=5)).columns),
     }
     return summary
@@ -135,10 +142,11 @@ def main() -> None:
     args = parse_args()
     summary = build_modeling_base(args.input_dir, args.output_file)
     logger.info(
-        "Finished consolidation | files=%s rows=%s output=%s",
+        "Finished consolidation | files=%s rows=%s output=%s size_mb=%s",
         summary["files"],
         summary["rows"],
         summary["output_file"],
+        summary["output_size_mb"],
     )
     logger.info("Columns: %s", ", ".join(summary["columns"]))
 

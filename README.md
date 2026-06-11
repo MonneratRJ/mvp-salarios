@@ -58,6 +58,18 @@ After reprocessing all available months from `2020-01` through `2026-04` with th
 | Total filtered rows     | 1,350,074 |
 | Processed CSV size      |   0.14 GB |
 
+## Consolidated dataset storage rule
+
+The monthly filtered files add up to roughly 0.14 GB, so a single uncompressed consolidated CSV would exceed GitHub's 100 MB file limit.
+
+To keep the modeling base versionable in the repository, the consolidation script now targets a gzip-compressed file:
+
+- `data/processed/modeling/ti_salary_modeling_base.csv.gz`
+
+On the current 2020-01 to 2026-04 corpus, the generated compressed artifact is 12.67 MB.
+
+The notebook should prefer this compressed artifact and only fall back to the legacy `.csv` path if needed locally.
+
 ## Keep as core predictors
 
 These fields are the most directly related to the person profile and are the first candidates for the model input.
