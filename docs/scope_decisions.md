@@ -29,4 +29,5 @@ Esses campos não são adequados para o escopo atual da calculadora porque podem
 - Regra de qualidade salarial: manter apenas `unidadesaláriocódigo = 5` (Mês).
 - Regra de consistência salarial: remover linhas em que `salário != valorsaláriofixo` e linhas com `salário` preenchido, mas `valorsaláriofixo` vazio.
 - Regra de variáveis temporais: manter `ano` e `mes` como contexto temporal numérico e excluir `competencia_mov` e `ano_mes` do caminho de modelagem por serem duplicatas em string.
+- Regra de variáveis com baixa variabilidade: excluir `horas_contratuais` da modelagem nesta versão quando a EDA confirmar alta concentração em poucos valores dominantes.
 - Qualquer mudança futura de escopo deve ser registrada aqui antes de ser aplicada no notebook.

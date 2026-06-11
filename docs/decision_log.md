@@ -39,6 +39,7 @@ O objetivo deste registro é concentrar a lógica do projeto em um único local 
 - Restringir a primeira passagem de modelagem a uma amostra de 30.000 linhas para manter o notebook responsivo.
 - Usar `ano`, `mes` e os preditores categóricos selecionados como conjunto de variáveis.
 - Excluir `municipio` da primeira versão do modelo por causa da alta cardinalidade.
+- Excluir `horas_contratuais` da versão atual do modelo por alta concentração em poucos valores dominantes, reduzindo potencial explicativo.
 
 ### Pré-processamento
 
