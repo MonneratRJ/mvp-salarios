@@ -59,8 +59,14 @@ O objetivo deste registro é concentrar a lógica do projeto em um único local 
 
 - Tamanho do dataset consolidado comprimido: 12,67 MB.
 - Tamanho da amostra de treinamento: 30.000 linhas.
-- Melhor modelo ajustado atualmente: `RandomForestRegressor`.
-- Métricas finais validadas no teste para o modelo ajustado: `MAE = 385965,91`, `RMSE = 3235211,00`, `R2 = 0,1855`.
+- Corte de modelagem: p99 = R$ 135.105,00 (excluídos outliers extremos).
+- Melhor modelo ajustado atualmente: `RandomForestRegressor` (modelo inicial e otimizado praticamente equivalentes nesta iteração).
+- Métricas finais validadas no teste:
+  - Baseline: `MAE = 3.505,87`, `RMSE = 5.391,14`, `R2 = -0,1215`
+  - Ridge: `MAE = 2.525,09`, `RMSE = 3.927,37`, `R2 = 0,4048`
+  - RandomForestRegressor: `MAE = 2.418,35`, `RMSE = 3.909,08`, `R2 = 0,4103`
+  - Modelo otimizado: `MAE = 2.429,89`, `RMSE = 3.913,20`, `R2 = 0,4091`
+- Carga dos dados via URL pública: `https://raw.githubusercontent.com/MonneratRJ/mvp-salarios/main/data/processed/modeling/ti_salary_modeling_base.csv.gz`.
 
 ## Regra de atualização
 
